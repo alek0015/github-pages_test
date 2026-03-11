@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>BoulderBud Climbing Video Upload</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- Bootstrap 5 CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"> 
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"> </script>
+        <!-- Favicon -->
+        <link rel="icon" type="image/png" href="/src/assets/bb_monke.png"/>
+        <link rel="stylesheet" href="/src/styles.css"/>
+        <!-- Reusable footer -->
+        <script src="/footer.js" type="text/javascript" defer></script>
+        <!-- Reusable left portion of the header-->
+        <script src="/header-ls.js" type="text/javascript" defer></script>
+        <!-- FontAwesome -->
+        <script src="https://kit.fontawesome.com/1123bfab37.js" crossorigin="anonymous"></script>
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Honk&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Alan+Sans:wght@300..900&display=swap" rel='stylesheet'>
+    </head>
+        <body class="bg" style="display: flex; flex-direction: column; min-height: 100vh;">
+            <!-- Header -->
+            <nav class="navbar navbar-expand-lg navbar-dark px-4 py-3 " id="header">
+                <div class="container-fluid d-flex justify-content-between align-items-center">
+                    <header-left-side></header-left-side>
+                    <div class="d-flex align-items-center gap-5">
+                        <div class="d-flex align-items-start" style="flex-direction: column;">
+                            <label id="uploads-left-message" for="uploads-limit-progress" style="color:white;"> <b><span id="numUploadsLeft"></span></b> uploads remaining today </label>
+                            <progress id="uploads-limit-progress" value="10" max="10"></progress>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <a class="nav-link" href="profile.html">
+                                <img id="user-image" src ="./src/assets/user.png" alt="Pfp Placeholder" class="profile-img" hint="My Profile"/>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            <div class="container-fluid bg-light align-items-center" id="main_content_area">
+                <div class="row">
+                    <div class="row align-items-start" id="background-panel2">
+                        <div class="col offset-md-3 col-6 my-5 p-4 align-items-center text-center" style="background-color: whitesmoke; border-radius: 3%; height: 500px;">
+                            <div class="container" style="background-color: rgb(217, 214, 214); width: 100%; height: 100%; border-radius: 3%; padding: 5%">
+                                <h2 class="allan-sans-heading">Upload a video of your climb</h2>
+                                <div id="drag-drop-area" style="display: flex; flex-direction: column; height: 80%; border: 2px dashed whitesmoke; align-items: center; justify-content: center; border-radius: 3%; margin: 5%;">
+                                    <div class="icon" style="font-size: 50px;">
+                                        <i class="fa-solid fa-upload"></i>
+                                    </div>
+                                    <span class="header">
+                                        <h4 id="action">Drag & Drop</h4>
+                                        or
+                                        <span class="button" id="file_browser_button">Browse Files</span>
+                                        <input type="file" id="file_browser_real" hidden></input>
+                                    </span>
+                                    <span class="supports" style="font-size: 12px;">(Support for MP4 Video Format)</span>
+                                    <div id="file-preview" style="display:none; margin-top:15px; text-align:center;">
+                                        <strong> <span id="file-name"></span> </strong>
+                                        <button id="remove-file" style="margin: 10px;"><i class="fa-solid fa-x"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col col-2 offset-md-5 mb-5">
+                            <button class="btn btn-primary w-100" id="submitB">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <footer-component></footer-component>
+    </body>
+    <!-- Script checking for authenticated user -->
+    <script type="module">
+            import { auth, db } from '/src/firebase.js';
+            import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+            import { doc, getDoc } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
+
+            onAuthStateChanged( auth, async (user) => {
+                if (user){ //i.e. user is logged in
+                    console.log("Current user:", user);
+                    if(user.photoURL){ //if user has a profile picture, display it
+                        document.getElementById("user-image").src = user.photoURL;
+                    }
+                    //Get number of attempts remaining for the user:
+                    const userRef = doc(db, "users", user.uid);
+                    const docSnap = await getDoc(userRef);
+                    console.log(docSnap);
+                    if (docSnap.exists()){
+                        const data = docSnap.data();
+                        console.log(data);
+                        document.getElementById("numUploadsLeft").innerText = data.uploads_left_today;
+                        document.getElementById("uploads-limit-progress").value = data.uploads_left_today;
+                    }
+                } else {
+                    window.location.href = "/index.html";
+                }
+            });
+    </script>
+    <!-- Script decrementing number of remaining uploads -->
+    <script type="module">
+        import {db, auth} from '/src/firebase.js';
+        import { doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
+        
+        async function subtractRemainingUploads() {
+            const user = auth.currentUser;
+            if (!user) {
+                console.error("No authenticated user found.");
+                return;
+            }
+
+            const userRef = doc(db, "users", user.uid);
+            const docSnap = await getDoc(userRef);
+
+            if (docSnap.exists()) {
+                const data = docSnap.data();
+                let uploadsLeft = data.uploads_left_today;
+
+                if (uploadsLeft > 0) {
+                    uploadsLeft -= 1;
+                    console.log(`Decrementing uploads left. New value: ${uploadsLeft}`);
+                    await updateDoc(userRef, {
+                        uploads_left_today: uploadsLeft
+                    });
+                    console.log(`Uploads left updated to: ${uploadsLeft}`);
+
+                    // Update UI
+                    document.getElementById("numUploadsLeft").innerText = uploadsLeft;
+                    document.getElementById("uploads-limit-progress").value = uploadsLeft;
+                } else {
+                    console.warn("No uploads left to decrement.");
+                }
+            } else {
+                console.error("User document does not exist.");
+            }
+        }
+
+        async function checkNumUploads() {
+            const user = auth.currentUser;
+            if (!user) {
+                console.error("No authenticated user found.");
+                return;
+            }
+
+            const userRef = doc(db, "users", user.uid);
+            const docSnap = await getDoc(userRef);
+
+            if (docSnap.exists()) {
+                const data = docSnap.data();
+                let uploadsLeft = data.uploads_left_today;
+
+                if (uploadsLeft == 0) {
+                    return false;
+                } else {
+                    return true;
+                }
+            } else {
+                console.error("User document does not exist.");
+            }
+        }
+
+        const dragArea = document.querySelector('#drag-drop-area');
+        const dragText = document.querySelector('#action'); 
+        const browseButton = document.querySelector('#file_browser_button');
+        const hiddenBrowse = document.querySelector('#file_browser_real');
+
+        const filePreview = document.querySelector('#file-preview');
+        const fileNameSpan = document.querySelector('#file-name');
+        const removeFileBtn = document.querySelector('#remove-file');
+        const submitButton = document.querySelector('#submitB');
+
+        let file = null;
+
+        // Helper func to set selected file & display display it in preview panel
+        function setFile(selectedFile) {
+            file = selectedFile;
+            fileNameSpan.textContent = file.name;
+            filePreview.style.display = "block";
+        }
+
+        // Helper func to clear file selection and preview
+        function clearFile() {
+            file = null;
+            hiddenBrowse.value = "";
+            filePreview.style.display = "none";
+        }
+
+        // Remove File Selection Button logic
+        removeFileBtn.addEventListener('click', () => {
+            clearFile();
+        });
+
+        // Custom Browse Button logic
+        browseButton.onclick = () => hiddenBrowse.click();
+
+        // Actual Browse Button logic
+        hiddenBrowse.onchange = (e) => {
+            const selectedFile = e.target.files[0];
+            handleIncomingFile(selectedFile);
+        };
+
+        // Drag & Drop Area logic
+        dragArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dragArea.classList.add("active");
+            dragText.textContent = "Release to upload file";
+        });
+
+        dragArea.addEventListener('dragleave', () => {
+            dragArea.classList.remove("active");
+            dragText.textContent = "Drag & Drop";
+        });
+
+        dragArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dragArea.classList.remove("active");
+            dragText.textContent = "Drag & Drop";
+
+            const droppedFile = e.dataTransfer.files[0];
+            handleIncomingFile(droppedFile);
+        });
+
+        // Validate + Process File
+        function handleIncomingFile(f) {
+            if (!f) return;
+
+            // Check file type (MP4)
+            if (f.type !== 'video/mp4') {
+                alert("Please upload a video in MP4 format.");
+                return;
+            }
+
+            // Check file size (< 200 MB)
+            if (f.size > 200000000) {
+                alert("File exceeds 200 MB limit.");
+                return;
+            }
+
+            // Check video length (< 3 minutes)
+            const videoEl = document.createElement('video');
+            videoEl.src = URL.createObjectURL(f);
+            videoEl.load();
+            videoEl.addEventListener('loadedmetadata', () => {
+                if (videoEl.duration > 180) {
+                    alert("Video should be under 3 minutes long.");
+                } else { //success
+                    setFile(f); 
+                }
+                URL.revokeObjectURL(videoEl.src);
+                videoEl.remove();
+            });
+        }
+
+        // Submit Button logic
+        submitButton.addEventListener('click', async () => {
+            const hasUploadsLeft = await checkNumUploads();
+            if(!hasUploadsLeft){
+                alert("You have no uploads remaining today. The limit will reset at 00:00:00 UTC.");
+                return;
+            }
+            if (!file) {
+                alert("Please select a file first.");
+                return;
+            }
+            // Show loading spinner
+            document.getElementById("loading-spinner").style.display = "flex";
+
+            // Build form-data request
+            const formData = new FormData();
+            formData.append("file", file, file.name);
+
+            try {
+                const response = await fetch(
+                    "https://boulderbud-api-696456691280.northamerica-northeast2.run.app/upload",
+                    {
+                        method: "POST",
+                        headers: {
+                            Accept: "application/json"
+                        },
+                        body: formData
+                    }
+                );
+                console.log("Received response:", response);
+
+                if (!response.ok) throw new Error("Upload failed.");
+                
+                // Parese JSON response
+                const json = await response.json();
+                console.log("Upload response:", json);
+
+                const videoId = json.videoId; //the videoId field will contain a unique identifier for the uploaded video
+                if (!videoId) throw new Error("videoId missing from response.");
+
+                // Start polling status
+                pollVideoStatus(videoId);
+
+            } catch (err) {
+                document.getElementById("loading-spinner").style.display = "none";
+                console.error(err);
+                alert("Upload failed. Check console.");
+            }
+        });
+
+        async function pollVideoStatus(videoId) {
+            const statusUrl = `https://boulderbud-api-696456691280.northamerica-northeast2.run.app/status/${videoId}`;
+            const pollInterval = 1000; // 1 second interval
+            const maxAttempts = 120;    // Stop after 2 minutes max
+            let attempts = 0;
+
+            while (attempts < maxAttempts) { 
+                attempts++;
+                try {
+                    const res = await fetch(statusUrl);
+
+                    if (!res.ok) {
+                        console.warn(`Status check returned ${res.status}`);
+                        await new Promise(r => setTimeout(r, pollInterval));
+                        continue;
+                    }
+
+                    const data = await res.json();
+
+                    // Expecting:
+                    // {
+                    //   "videoId": "...",
+                    //   "status": "PROCESSING",
+                    //   "message": "specific actions being taken"
+                    // }
+
+                    if (data.status === "COMPLETED") {
+                        document.getElementById("loading-spinner").style.display = "none";
+                        subtractRemainingUploads();
+                        await new Promise(r => setTimeout(r, 1000)); //brief delay to ensure decrement is processed
+                        alert("Video analysis complete");
+                        window.location.href = `/feedback.html?videoId=${videoId}`;
+                        return;
+                    }
+
+                    if (data.status === "FAILED") {
+                        document.getElementById("loading-spinner").style.display = "none";
+                        alert("Video analysis failed.");
+                        return;
+                    }
+
+                } catch (err) {
+                    document.getElementById("loading-spinner").style.display = "none";
+                    console.error("Error polling status:", err);
+                }
+
+                await new Promise(r => setTimeout(r, pollInterval));
+            }
+
+            alert("Timed out waiting for video analysis.");
+        }
+    </script>
+    <div id="loading-spinner" style="
+        display:none;
+        position: fixed;
+        inset: 0;
+        background: rgba(11, 7, 1, 0.6);
+        backdrop-filter: blur(3px);
+        z-index: 9999;
+        color: white;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        font-size: 20px;
+        flex-direction: column;
+    ">
+        <div class="spinner-grow text-info" style="width: 4rem; height: 4rem;" role="status"></div>
+        <div style="margin-top: 15px;">Our API is processing your video...</div>
+    </div>
+  </body>
+</html>

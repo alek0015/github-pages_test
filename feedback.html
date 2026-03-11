@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en">
+     <head>
+        <title>BoulderBud Video Feedback</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- Bootstrap 5 CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"> 
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"> </script>
+        <!-- Favicon -->
+        <link rel="icon" type="image/png" href="/src/assets/bb_monke.png"/>
+        <link rel="stylesheet" href="/src/styles.css"/>
+        <!-- Reusable footer -->
+        <script src="/footer.js" type="text/javascript" defer></script>
+        <!-- Reusable left portion of the header-->
+        <script src="/header-ls.js" type="text/javascript" defer></script>
+        <!-- FontAwesome -->
+        <script src="https://kit.fontawesome.com/1123bfab37.js" crossorigin="anonymous"></script>
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Honk&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+    </head>
+    <body class="bg" style="display: flex; flex-direction: column; min-height: 100vh;">
+            <!-- Header -->
+            <nav class="navbar navbar-expand-lg navbar-dark px-4 py-3 " id="header">
+                <div class="container-fluid d-flex justify-content-between align-items-center">
+                    <header-left-side></header-left-side>
+                    <div class="d-flex align-items-center gap-5">
+                        <div class="d-flex align-items-start" style="flex-direction: column;">
+                            <label id="uploads-left-message" for="uploads-limit-progress" style="color:white;"> <b><span id="numUploadsLeft"></span></b> uploads remaining today </label>
+                            <progress id="uploads-limit-progress" value="10" max="10"></progress>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <a class="nav-link" href="profile.html">
+                                <img  id="user-image" src ="./src/assets/user.png" alt="Pfp Placeholder" class="profile-img" hint="My Profile"/>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            <div class="container-fluid bg-light align-items-center" id="main_content_area">
+                <div class="row">
+                    <div class="row" id="background-panel2">
+                        <div id="video-feedback-panel" class="col col-12 py-2 my-4 px-4 mx-4">
+                            <div class="row mb-3">
+                                <div class="col-6 offset-3 p-3" style="background-color: rgba(255, 255, 0, 0.7); text-align: center; border-radius: 4%;">
+                                    <h4>We're working on being able to display your uploaded video. Thank you for your patience!</h4>
+                                    <h5>The current feedback is based off of our demo clip, which causes the timestamps you see to be inaccurate.</h5>
+                                    <p>P.s. The feedback is still yours =]</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col col-7 ms-4 mx-2 py-2" id="video_container" style="height: 600px; background-color: rgba(245, 245, 245, 0.9);"> 
+                                    <!-- Video player using Video.js -->
+                                    <video id="vid" class="video-js" controls preload="auto" data-setup="{}" id="demo-video">
+                                        <source src="/src/assets/nine_sec_bouldering_redit.mp4" type="video/mp4" />
+                                        <p class="vjs-no-js">
+                                            To view this video please enable JavaScript, and consider upgrading to a web browser that
+                                            <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+                                        </p>
+                                    </video>
+                                </div>
+                                <div class="col col-4" id="feedback_container" style="position: relative; height: 630px; max-height:631px; background-color: rgba(255, 255, 255, 0.99);">
+                                    <div class="d-flex" style="flex-direction: column;">
+                                        <div class="row p-3" style="position: absolute; top: 0; right: 0; left: 0; z-index: 10; background-color: lightgray;"> 
+                                            <p></p>
+                                        </div>
+                                        <div style="position: absolute; top:60px; bottom:60px; left:0; right: 0; overflow-y: auto;">
+                                            <ul id="feedback-list" style="list-style-type: none; padding: 0; margin: 0;">
+                                                <li>Feedback 1</li>
+                                                <li>Feedback 2</li>
+                                                <li>Feedback 3</li>
+                                                <li>Feedback 4</li>
+                                                <li>Feedback 5</li>
+                                                <li>Feedback 6</li>
+                                                <li>Feedback 7</li>
+                                                <li>Feedback 8</li>
+                                            </ul>
+                                        </div>
+                                        <div class="row p-3" style="position: absolute; bottom: 0; right: 0; left: 0; z-index: 10; background-color: lightgray;"> 
+                                            <p></p>
+                                        </div>
+                                    </div>
+                                </div> <!-- Feedback container end-->
+                                <!-- Script checking for authenticated user -->
+                                <script type="module">
+                                        import { auth, db } from './src/firebase.js';
+                                        import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+                                        import { doc, getDoc } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
+
+                                        onAuthStateChanged( auth, async (user) => {
+                                            if (user){ //i.e. user is logged in
+                                                console.log("Current user:", user);
+                                                if(user.photoURL){ //if user has a profile picture, display it
+                                                    document.getElementById("user-image").src = user.photoURL;
+                                                }
+                                                //Get number of attempts remaining for the user:
+                                                const userRef = doc(db, "users", user.uid);
+                                                const docSnap = await getDoc(userRef);
+                                                console.log(docSnap);
+                                                if (docSnap.exists()){
+                                                    const data = docSnap.data();
+                                                    console.log(data);
+                                                    document.getElementById("numUploadsLeft").innerText = data.uploads_left_today;
+                                                    document.getElementById("uploads-limit-progress").value = data.uploads_left_today;
+                                                }
+                                            } else {
+                                                window.location.href = "/index.html";
+                                            }
+                                        });
+                                </script>
+                                <script>
+                                    const video = document.getElementById("vid");
+                                    let detectedFPS = null;
+
+                                    video.addEventListener("loadedmetadata", () => {
+                                        detectFPS().then(fps => {
+                                            detectedFPS = fps;
+                                            console.log("Detected FPS:", fps);
+
+                                            loadFeedback(); // load results only after fps is known
+                                        });
+                                    });
+
+                                    // Compute video FPS 
+                                    function detectFPS() {
+                                        return new Promise(resolve => {
+                                            // If not supported, fall back silently
+                                            if (!video.requestVideoFrameCallback) {
+                                                console.warn("requestVideoFrameCallback not supported. Using fallback FPS = 30.");
+                                                resolve(1);
+                                                return;
+                                            }
+
+                                            let lastTimestamp = null;
+
+                                            const handler = (now, metadata) => {
+                                                if (lastTimestamp === null) {
+                                                    lastTimestamp = metadata.presentedFrames;
+                                                    video.requestVideoFrameCallback(handler);
+                                                    return;
+                                                }
+
+                                                const frameDiff = metadata.presentedFrames - lastTimestamp;
+                                                const timeDiff = metadata.expectedDisplayTime - now; // microseconds → ms
+
+                                                if (frameDiff > 0 && timeDiff !== 0) {
+                                                    const fps = 1000 / (timeDiff / frameDiff);
+                                                    resolve(Math.round(fps));
+                                                } else {
+                                                    resolve(30); // fallback
+                                                }
+                                            };
+
+                                            video.requestVideoFrameCallback(handler);
+
+                                            // If nothing fires after 500ms, fallback
+                                            setTimeout(() => resolve(30), 500);
+                                        });
+                                    }
+
+                                    // Function to convert frame number to benchmark in seconds
+                                    function frameToTimestamp(frame, fps) {
+                                        return fps ? frame / fps : null;
+                                    }
+
+                                    // Function to format seconds to mm:ss timestamp
+                                    function formatTimestamp(sec) {
+                                        if (sec === null) return "Unknown";
+                                        const m = Math.floor(sec / 60);
+                                        const s = Math.floor(sec % 60).toString().padStart(2, "0");
+                                        return `${m}:${s}`;
+                                    }
+
+                                    // Load video feedback from API
+                                    async function loadFeedback() {
+                                        const params = new URLSearchParams(window.location.search);
+                                        const videoId = params.get("videoId");
+
+                                        if (!videoId) {
+                                            console.error("Missing videoId");
+                                            return;
+                                        }
+
+                                        const url = `https://boulderbud-api-696456691280.northamerica-northeast2.run.app/results/${videoId}`;
+
+                                        try {
+                                            const res = await fetch(url);
+                                            const data = await res.json();
+
+                                            if (!res.ok) {
+                                                console.error("API error:", data);
+                                                return;
+                                            }
+
+                                            const segments = data.segmentFeedbacks || [];
+                                            renderSegments(segments);
+
+                                        } catch (err) {
+                                            console.error("Error loading feedback:", err);
+                                        }
+                                    }
+
+                                    function renderSegments(segments) {
+                                        const list = document.getElementById("feedback-list");
+                                        list.innerHTML = ""; // Clear placeholder content
+
+                                        const fps = detectedFPS || 30; // Fallback assumption
+                                        console.log("Using FPS for conversion:", fps);
+
+                                        segments.forEach(seg => {
+                                            
+                                            const startSec = frameToTimestamp(seg.startFrame, fps);
+                                            const endSec = frameToTimestamp(seg.endFrame, fps);
+
+                                            const li = document.createElement("li");
+                                            li.style.marginBottom = "12px";
+                                            li.style.padding = "8px";
+                                            li.style.borderBottom = "1px solid #ddd";
+                                            li.style.cursor = "pointer";
+                    
+                                            li.innerHTML = `
+                                                <table> 
+                                                    <tr> 
+                                                        <td class="timestamp" style="width: 25%;">
+                                                            ${formatTimestamp(startSec)} - ${formatTimestamp(endSec)}
+                                                        </td>
+                                                        <td>
+                                                            ${seg.feedback}
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            `;
+
+                                            const timestamp = li.querySelector("td.timestamp");
+
+                                            // Jump to timestamp when clicked
+                                            li.addEventListener("click", () => {
+                                                const timestamps = document.querySelectorAll(".timestamp");
+                                                timestamps.forEach(ts => {
+                                                    ts.style.textDecoration = "none";
+                                                    ts.style.color = "black";
+                                                });
+                                                const liItems = document.querySelectorAll("#feedback-list li");
+                                                liItems.forEach(item => {
+                                                    item.style.backgroundColor = "transparent";
+                                                });
+                                                
+                                                timestamp.style.textDecoration = "underline";
+                                                timestamp.style.color = "rgb(36, 173, 237)";
+                                                li.style.backgroundColor = "#f0f8ff";
+                                                if (startSec !== null) {
+                                                    video.currentTime = startSec;
+                                                    video.pause();
+                                                }
+                                            });
+
+                                            list.appendChild(li);
+                                        });
+                                    }
+                                </script>
+                            </div>
+                            <div class="row">
+                                <div class="col col-2">
+                                    <button class="btn btn-primary w-100 mt-3 mb-2 py-2" onclick="location.href='/upload.html'" id="backToUploadBtn">
+                                        <span class="icon" style="font-size:18px;">
+                                            <i class="fa-solid fa-arrow-left" style="margin-right:5%"></i>
+                                            Back to upload
+                                        </span> 
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <footer-component></footer-component>
+    </body>
+</html>

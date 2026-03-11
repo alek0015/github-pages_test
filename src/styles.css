@@ -1,0 +1,341 @@
+html, body {
+    height: 100%;
+    margin:0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+#welcome_text {
+    font-family: Allerta Stencil, sans-serif;
+    font-size: 48px;
+    z-index: 0;
+    opacity: 0; /* start invisible for fade-in effect */
+    animation: fadeIn 5s forwards; /* fade in over 2 seconds */
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0;}
+    100% { opacity: 1;}
+}
+
+#scroll-tracker {
+    height: 7px;
+    z-index: 1000;
+    position: fixed;
+    top:0;
+    background-color: rgb(0, 174, 255);
+    width: 100%;
+    scale: 0.05 1;
+    transform-origin: left;
+    animation: scroll-tracker linear;
+    animation-timeline: scroll();
+}
+
+@keyframes scroll-tracker {
+    to { scale: 1 1;}
+}
+
+.panel {
+    background-color: rgba(171, 68, 89, 0.96);
+    background-position: center;
+    color: #1B1833;
+    border-radius: 15px;
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.panel.in-view {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.panel h2 {
+    font-family: "Contrail One", sans-serif;
+    padding-top: 15px;
+}
+
+.about_us_text {
+    color: rgb(227, 214, 184);
+    font-family: "Averia Libre", system-ui;
+    font-weight: 500;
+    font-style: normal;
+    line-height: 2;
+}
+
+#lightText {
+    color: white;
+    font-family: Copperplate Bold, sans-serif;
+}
+
+.profile-img {
+    vertical-align: middle;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+#main_content_area {
+    padding-top: 90px;
+    flex-grow: 1;
+}
+
+#background-panel {
+    min-height: calc(100vh - 90px - 300px);
+}
+
+#parallax1 {
+    background-image: url("./src/assets/bright-climbing-wall.jpg");
+    width: 100%;
+    margin:0;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    /* What actually makes the bg image lag behind the other content while scrolling: */
+    background-attachment: fixed; 
+}
+
+#parallax2 {
+    background-image: url("./src/assets/ledges-grips-wall.jpg");
+    width: 100%;
+    margin:0;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    /* What actually makes the bg image lag behind the other content while scrolling: */
+    background-attachment: fixed;
+}
+
+.bg {
+    background-image: url("./src/assets/bright-climbing-wall.jpg");
+    width: 100%;
+    margin:0;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    /* What actually makes the bg image lag behind the other content while scrolling: */
+    background-attachment: fixed; 
+}
+
+#header, #footer {
+    z-index: 20;
+    background-color: #441752 !important;
+    width: 100%;
+    height:100%;
+    margin: 0;
+}
+
+#boulderbud {
+    font-family: "Honk", system-ui;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-variation-settings:
+    "MORF" 15,
+    "SHLN" 50;
+    font-size: 40px;
+}
+
+#header {
+    position: fixed;
+    height: 90px;
+}
+
+#video_container {
+    height: 500px;
+    overflow: hidden;
+    border-radius: 2.5%;
+}
+
+#vid {
+    width: 100%;
+    height: 100%;
+    object-fit: scale-down;
+    background-color: white;
+    border-radius: 2.5%;
+}
+
+
+#video_container #demo-video {
+    width: 100%;
+    height: 100%;
+    object-fit: scale-down;
+    background-color: white;
+    border-radius: 2.5%;
+}
+
+#feedback_container {
+    max-height: 500px; 
+    border-radius: 2.5%; 
+    overflow-y:scroll; 
+    font-size:18px; 
+    background-color: white;
+}
+
+li {
+    margin: 15px;
+    border-color: gray;
+    background-color: white;
+    border-bottom-style: solid ;
+    border-width: 2px;
+    font-family: "Nunito", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 16px;
+}
+
+.timestamp {
+    font-weight: 700;
+}
+
+#email-contact {
+    padding-left: 50px;
+    font-size:18px;
+}
+
+.modal {
+    display: none;
+    z-index: 1;
+    padding-top: 20%;
+    padding-left: 25%;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+    position: absolute;
+    left: 50%;
+    top: 25%;
+    width: 60%;
+    transform: translate(-50%, -10%);
+    background-color: #441752;
+    align-self: center; 
+    color: white;
+    margin: auto;
+    border: 2px solid white;
+    padding:5%
+}
+
+#modalEmailInput {
+    display: none;
+}
+
+.close {
+    color: white;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover, .close:focus {
+    color: gray;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#background-panel1 {
+    background-image: url("./src/assets/ledges-grips-wall.jpg");
+    width: 100%;
+    margin: 0;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    min-height: calc(100vh - 90px - 300px);
+}
+
+#background-panel2 {
+    background-image: url("./src/assets/bright-climbing-wall.jpg");
+    width: 100%;
+    margin: 0;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    min-height: calc(100vh - 90px - 300px);
+}
+
+#donthave-have_link:hover, #donthave-have_link:focus {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Profile Page Specific Styles */
+.tab {
+    overflow: hidden;
+    border-bottom: 1px solid #ccc;
+    background-color: #f1f1f1;
+    position: relative;
+}
+
+.tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.2s;
+    font-size: 16px;
+    width: 50%;
+}
+
+.tab button:hover {
+    background-color: #ddd;
+}
+
+.tab button.active {
+    background-color: #ccc;
+}   
+
+#past-feedback-entry{
+    width: 250px; 
+    position: relative; 
+    height:180px; 
+    margin-left: 55px; 
+    margin-bottom: 20px;
+    padding: 0%; 
+    border: solid 3px gray; 
+    border-radius: 3px;
+}
+
+#thumbnail{
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+    margin: 0;
+}
+
+#feedback-timestamp {
+    position: absolute; 
+    top: 145px; 
+    left: 10px; 
+    background-color: rgba(53, 55, 56, 0.25);
+}
+
+#uploads-limit-progress{
+    width: 250px; 
+    height: 20px;
+}
+
+.allan-sans-heading {
+  font-family: "Alan Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.header .button {
+    color: rgb(24, 103, 230);
+    cursor: pointer;
+}
+
+#drag-drop-area.active {
+    background-color: rgb(195, 192, 192);
+}
