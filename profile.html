@@ -21,14 +21,14 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Honk&display=swap" rel="stylesheet">
     </head>
-        <body class="bg" style="display: flex; flex-direction: column; min-height: 100vh;">
+        <body class="bg">
         <!-- Header -->
         <nav class="navbar navbar-expand-lg navbar-dark px-4 py-3 " id="header">
-            <div class="container-fluid d-flex justify-content-between align-items-center">
+            <div class="container-fluid d-flex">
                 <header-left-side></header-left-side>
-                <div class="d-flex align-items-center gap-5">
+                <div class="d-flex gap-5">
                     <div class="d-flex align-items-start" style="flex-direction: column;">
-                        <label id="uploads-left-message" for="uploads-limit-progress" style="color:white;"> <b><span id="numUploadsLeft"></span></b> uploads remaining today </label>
+                        <label id="uploads-left-message" for="uploads-limit-progress"> <b><span id="numUploadsLeft"></span></b> uploads remaining today </label>
                         <progress id="uploads-limit-progress" value="10" max="10"></progress>
                     </div>
                     <div class="d-flex align-items-center">
@@ -38,22 +38,22 @@
             </div>
         </nav>
         <div class="container-fluid" id="main_content_area">
-            <div class="row">
+            <div class="row" >
                 <div class="row align-items-start" id="background-panel1">
-                    <div class="col col-10 offset-1 my-4" style="background-color: rgba(243, 161, 89, 0.9); border-radius: 3%;">
-                        <h2 id="lightText" style="padding-bottom: 4%; text-align: center; margin-top: 30px;">My Profile</h2>
+                    <div class="col col-10 offset-1 my-4" id="profile-panel">
+                        <h2 id="lightText" style="margin-top: 1rem;">My Profile</h2>
                         <div class="d-flex flex-column align-items-center py-3">
-                            <img id="user-image" src ="./src/assets/user.png" alt="Pfp" class="profile-img mb-3" style="height: 5%; width: 100px; border: 4px solid white;"/>
-                            <p id="user-email" style="color:white;"> </p>
-                            <a href="" id="logoutB" style="padding-bottom: 2%;">Sign Out</a>
-                            <div class="col col-10 align-items-start bg-light overflow-auto">
+                            <img id="user-profile-button" src ="./src/assets/user.png" alt="Profile Picture" class="profile-img mb-3"/>
+                            <p id="user-email"></p>
+                            <a href="" id="logout-button">Sign Out</a>
+                            <div class="col col-10 bg-light overflow-auto" id="user-functions-container">
                                 <div class="tab">
                                     <button class="tablinks active" onclick="openTab(event, 'feedback-history')">Feedback History</button>
-                                    <button class="tablinks" onclick="openTab(event, 'manage-account')">Manage Account</button>
+                                    <button class="tablinks" onclick="openTab(event, 'manage-account-content')">Manage Account</button>
                                 </div>
                                 <!-- Tab Content -->
                                 <div id="feedback-history" class="tabcontent">
-                                    <p style="padding: 15px;">Stay tuned for this feature!</p>
+                                    <p>Stay tuned for this feature!</p>
                                     <!-- TODO: Use JS to dynamically populate past feedback entries based on user data -->    
                                     <!-- <div id="past-feedback-container" class="d-flex justify-content-start" style="max-height: 400px; overflow-x: scrollable;">
                                         <div class="row">
@@ -66,23 +66,23 @@
                                         </div>
                                     </div> -->
                                 </div>
-                                <div id="manage-account" class="tabcontent" style="display:none; margin: 5%;">
-                                    <p>Email: <span id="email-display" style="color: purple; padding-left: 3%; padding-right: 2%;"> </span> <a href="" id="changeEmailB" style="color:blue; text-decoration:underline; font-size: 12px;">Change email</a></p>
-                                    <form id="changeEmailForm" style="display: none;">
-                                        <input type="email" id="newEmailInput" name="email" placeholder="Enter new email"/>
-                                        <button type="submit" id="submitEmailChangeB" class="btn btn-primary">Update</button>
+                                <div id="manage-account-content" class="tabcontent">
+                                    Email: <span id="email-display"></span> <a href="" id="change-email-button">Change email</a>
+                                    <form id="change-email-form" style="display: none;">
+                                        <input type="email" id="new-email-input" name="email" placeholder="Enter new email"/>
+                                        <button type="submit" id="submit-new-email-button" class="btn btn-primary">Update</button>
                                     </form>
-                                    <p class="pw_provider" id="formFeedback"></p>
-                                    <a class="pw_provider" href="" id="changePasswordB" style="color:blue; text-decoration:underline;">Change password</a>
-                                    <form id="changePasswordForm" style="display: none;">
-                                        <input type="password" id="newPasswordInput" name="password1" placeholder="New password"/>
-                                        <input type="password" id="confirmNewPasswordInput" name="password2" placeholder="Confirm new password"/>
-                                        <button type="submit" id="submitPasswordChangeB" class="btn btn-primary">Update</button>
+                                    <p class="pw_provider" id="email-form-feedback"></p>
+                                    <a class="pw_provider" href="" id="change-password-button">Change password</a>
+                                    <form id="change-password-form" style="display: none;">
+                                        <input type="password" id="new-password-input" name="password1" placeholder="New password"/>
+                                        <input type="password" id="password-input-confirm" name="password2" placeholder="Confirm new password"/>
+                                        <button type="submit" id="submit-new-password-button" class="btn btn-primary">Update</button>
                                     </form>
-                                    <p class="pw_provider" id="formFeedback2"></p>
+                                    <p class="pw_provider" id="password-form-feedback"></p>
                                     <br>
-                                    <a class="pw_provider" id="deleteAccountB" href="" style="color: red; text-decoration: underline;">Delete Account</a>
-                                    <p class="pw_provider" id="feedback"></p>
+                                    <a class="pw_provider" id="delete-account-button" href="">Delete Account</a>
+                                    <p class="pw_provider" id="delete-acc-action-feedback"></p>
                                 </div>
                             </div>
                         </div>
@@ -90,29 +90,22 @@
                 </div>
             </div>
             <!-- Re-authentication modal -->
-            <div id="reauthModal" class="modal" style="display: none;">
-                <div class="modal-content" style="width: 45%; height: 50%; padding-top: 1%; padding-right: 2%; padding-left: 2%;">
-                    <div class="row mb-3 text-end">
+            <div id="reauth-modal" class="modal justify-content-center">
+                <div id="reauth-modal-content" class="text-center">
+                    <div class="text-end">
                         <span class="close" >&times;</span>
                     </div>
-                    <div class="row text-center">
-                        <h3>Confirm Your Login Credentials</h3>
-                        </br>
-                        <div class="col-8 offset-2 align-items-center gap-2 my-3">
-                            <form id="reauthForm" class="pt-3">
-                                <input class="form-control" type="email" id="auth-email" name="email" placeholder="Enter your account email" style="padding-bottom: 1%;" required></input></br>
-                                <div style="position:relative">
-                                    <input class="form-control" type="password" id="auth-password" name="password" placeholder="Enter your password" style="padding-bottom: 1%; padding-right: 40px;" required></input></br>
-                                    <i id="icon" class="fa-solid fa-eye" style="position: absolute; right: 10px; top: 15%; font-size: 19px; color: rgb(158, 158, 159); cursor: pointer;"></i>
-                                </div>
-                                <div class="row">
-                                    <div class="col col-8 offset-2">
-                                        <button type="submit" id="submitReauthB" class="btn btn-primary w-100" onclick="">Submit</button>
-                                    </div>
-                                </div>
-                            </form>
-                            <p id="modalFeedback"></p>    
-                        </div>
+                    <h3>Confirm Your Account Credentials</h3>
+                    <div class="d-flex flex-column align-items-center gap-2 my-3 ">
+                        <form id="reauth-form" class="pt-4 w-40">
+                            <input class="form-control" type="email" id="auth-email" name="email" placeholder="Enter your account email" required></input></br>
+                            <div style="position:relative">
+                                <input class="form-control" type="password" id="auth-password" name="password" placeholder="Enter your password" required></input></br>
+                                <i id="icon" class="fa-solid fa-eye"></i>
+                            </div>
+                            <button type="submit" id="submit-creds-button" class="btn btn-primary w-100" onclick="">Submit</button>
+                        </form>
+                        <p id="reauth-modal-feedback"></p>    
                     </div>
                 </div>
             </div>
@@ -120,311 +113,330 @@
          <!-- Footer -->
         <footer-component></footer-component>
     </body>
-    
-    <script type="module">
-        import { auth, db } from './src/firebase.js';
-        import { onAuthStateChanged, verifyBeforeUpdateEmail, reauthenticateWithCredential, 
-            EmailAuthProvider, updatePassword, signOut, 
-            deleteUser, reauthenticateWithCredential, EmailAuthProvider } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
-        import { doc, getDoc } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
-        const changeEmailForm = document.getElementById('changeEmailForm');
-        const changeEmailFormSubmitButton = document.getElementById('submitEmailChangeB');
-        const authenticationModal = document.getElementById("reauthModal");
-        const authForm = document.getElementById("reauthForm");
-        const changePasswordForm = document.getElementById('changePasswordForm');
-        const changePasswordFormSubmitButton = document.getElementById('submitPasswordChangeB');
-        const deleteAccButton = document.getElementById('deleteAccountB'); 
+    <!-- Script checking for authenticated user -->
+        <script type="module">
+            import { auth, db } from './src/firebase.js';
+            import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+            import { doc, getDoc } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
 
-        /* Script checking for authenticated user: */
-        onAuthStateChanged( auth, async (user) => {
-            if (user){ //i.e. user is logged in
-                console.log("Current user:", user);
-                if(user.providerData[0].providerId === 'google.com'){
-                    document.querySelectorAll('.pw_provider').forEach( el => el.style.display = 'none');
-                    document.getElementById("changeEmailB").innerText = "";
-                } else {
-                    document.querySelectorAll('.pw_provider').forEach( el => el.style.display = 'block');
-                    document.getElementById("changeEmailB").innerText = "Change email";
-                }
-                document.getElementById("user-email").innerText = user.email;
-                document.getElementById("email-display").innerText = user.email;
-                if(user.photoURL){ //if user has a profile picture, display it
-                    document.getElementById("user-image").src = user.photoURL;
-                }
-                //Get number of attempts remaining for the user:
-                const userRef = doc(db, "users", user.uid);
-                const docSnap = await getDoc(userRef);
-                console.log(docSnap);
-                if (docSnap.exists()){
-                    const data = docSnap.data();
-                    console.log(data);
-                    document.getElementById("numUploadsLeft").innerText = data.uploads_left_today;
-                    document.getElementById("uploads-limit-progress").value = data.uploads_left_today;
-                }
-            } else {
-                window.location.href = "./index.html";
-            }
-        });
-    
-        /* Script handling email change form submission: */
-        changeEmailFormSubmitButton.addEventListener('click', async (e) => {
-            e.preventDefault();
-            const formData = new FormData(changeEmailForm);
-            const updatedEmail = formData.get("email");
-            const user = auth.currentUser;
+            const changeEmailButton = document.getElementById('change-email-button');
 
-            try {
-                //Try to update email
-                await verifyBeforeUpdateEmail(user, updatedEmail);
-                document.getElementById("formFeedback").textContent = "Check your new email for a confirmation link.";
-                document.getElementById("formFeedback").style.backgroundColor = "lightgreen";
-                changeEmailForm.reset(); 
-                setTimeout(() => {
-                    //Hide form
-                    changeEmailForm.style.display = "none";
-                }, 1000);
-            } catch (err){
-                console.error("Email update error:", err);
-                //Session too old, reauthenticate:
-                if (err.code == 'auth/requires-recent-login') {
-                    try{
-                        //Re-authenticate user in case session is considered old:
-                        const renewedCredential = await promptForCredentials();
-                        await reauthenticateWithCredential(user, renewedCredential);
-                        console.log("Reauthentication successful")
-            
-                        //Retry email update
-                        await verifyBeforeUpdateEmail(user, updatedEmail);
-                        document.getElementById("formFeedback").textContent = "Check your new email for a confirmation link.";
-                        document.getElementById("formFeedback").style.backgroundColor = "lightgreen";
-                        changeEmailForm.reset();
-                        setTimeout(() => {
-                            //Hide form
-                            changeEmailForm.style.display = "none";
-                        }, 1000);
-                    } catch (reauthErr){
-                        console.error("Reauthentication failed:", reauthErr);
-                        document.getElementById("formFeedback").textContent = "Reauthentication failed. Try logging in again.";
-                        document.getElementById("formFeedback").style.backgroundColor = "coral";
-                        return 
+            onAuthStateChanged( auth, async (user) => {
+                if (user){ //i.e. user is logged in
+                    console.log("Current user:", user);
+                    if(user.providerData[0].providerId === 'google.com'){
+                        document.querySelectorAll('.pw_provider').forEach( el => el.style.display = 'none');
+                        changeEmailButton.innerText = "";
+                    } else {
+                        document.querySelectorAll('.pw_provider').forEach( el => el.style.display = 'block');
+                        changeEmailButton.innerText = "Change email";
+                    }
+                    document.getElementById("user-email").innerText = user.email;
+                    document.getElementById("email-display").innerText = user.email;
+                    if(user.photoURL){ //if user has a profile picture, display it
+                        document.getElementById("user-profile-button").src = user.photoURL;
+                    }
+                    //Get number of attempts remaining for the user:
+                    const userRef = doc(db, "users", user.uid);
+                    const docSnap = await getDoc(userRef);
+                    console.log(docSnap);
+                    if (docSnap.exists()){
+                        const data = docSnap.data();
+                        console.log(data);
+                        document.getElementById("numUploadsLeft").innerText = data.uploads_left_today;
+                        document.getElementById("uploads-limit-progress").value = data.uploads_left_today;
                     }
                 } else {
-                    document.getElementById("formFeedback").textContent = "Error updating email. Please retry.";
-                    document.getElementById("formFeedback").style.backgroundColor = "coral";
+                    window.location.href = "./index.html";
                 }
-            }
-        });
-
-        //Prompt for credentials using modal in profile.html
-        function promptForCredentials(){
-            return new Promise((resolve, reject) => {
-                authenticationModal.style.display = "block";
-
-                //Handle modal submit
-                const  handleSubmit = async (e) => {
-                    e.preventDefault();
-                    const authFormData = new FormData(authForm);
-                    const email = authFormData.get("email");
-                    const password = authFormData.get("password");
-                    try {
-                        const credential = EmailAuthProvider.credential(email, password);
-                        //clean up and hide form
-                        authForm.reset();
-                        document.getElementById("modalFeedback").textContent = "Authentication successful.";
-                        document.getElementById("modalFeedback").style.backgroundColor = "lightgreen";
-                        setTimeout(() => {
-                            authenticationModal.style.display = "none";
-                        }, 500);
-
-                        authForm.removeEventListener('submit', handleSubmit);
-
-                        resolve(credential);
-                    } catch (err) {
-                        document.getElementById("modalFeedback").textContent = "Email or password incorrect. Please try again.";
-                        document.getElementById("modalFeedback").style.backgroundColor = "coral";
-                        reject(err);
-                    }
-                }
-
-                authForm.addEventListener('submit', handleSubmit);
             });
-        }
-        
-        /* Script handling password change form submission: */
-        changePasswordFormSubmitButton.addEventListener('click', async (e) => {
-            e.preventDefault();
-            const formData = new FormData(changePasswordForm);
-            const newPassword = formData.get("password1");
-            const newPasswordRepeat = formData.get("password2");
+        </script>
+        <script type="module">
+            import {auth} from './src/firebase.js';
+            import {verifyBeforeUpdateEmail, reauthenticateWithCredential, EmailAuthProvider} from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
 
-            if(newPassword !== newPasswordRepeat){
-                document.getElementById("formFeedback2").textContent = "Passwords do not match.";
-                document.getElementById("formFeedback2").style.backgroundColor = "coral";
-            } else {
+            const emailForm = document.getElementById('change-email-form');
+            const emailFormSubmitButton = document.getElementById('submit-new-email-button');
+            const emailFormFeedback = document.getElementById('email-form-feedback');
+            const authenticationModal = document.getElementById('reauth-modal');
+            const authForm = document.getElementById('reauth-form');
+            const authModalFeedback = document.getElementById('reauth-modal-feedback');
+
+
+            emailFormSubmitButton.addEventListener('click', async (e) => {
+                e.preventDefault();
+                const formData = new FormData(emailForm);
+                const updatedEmail = formData.get("email");
+                const user = auth.currentUser;
+
                 try {
-                    updatePassword(auth.currentUser, newPassword);
-                    changePasswordForm.reset(); 
-                    document.getElementById("formFeedback2").textContent = "Password update successful.";
-                    document.getElementById("formFeedback2").style.backgroundColor = "lightgreen";
+                    //Try to update email
+                    await verifyBeforeUpdateEmail(user, updatedEmail);
+                    emailFormFeedback.textContent = "Check your new email for a confirmation link.";
+                    emailFormFeedback.style.backgroundColor = "lightgreen";
+                    emailForm.reset(); 
                     setTimeout(() => {
                         //Hide form
-                        changePasswordForm.style.display = "none";
-                        window.location.reload();
+                        emailForm.style.display = "none";
                     }, 1000);
                 } catch (err){
-                    console.error("Password update error:", err);
-                    document.getElementById("formFeedback2").textContent = "Error updating password";
-                    document.getElementById("formFeedback2").style.backgroundColor = "coral";
-                }
-            }
-        });
-        
-        /* Script handling logout button: */
-        document.getElementById("logoutB").addEventListener("click", async (e) => {
-            e.preventDefault();
-            try {
-                await signOut(auth);
-                console.log("User signed out;");
-                setTimeout(() => {
-                    window.location.href = "./index.html";
-                }, 500);
-            } catch (err) {
-                console.error("Error signing out: ", err.message);
-            }
-        });
-        /* Script handling account deletion: */
-        deleteAccButton.addEventListener('click', async (e) => {
-            e.preventDefault();
-            const user = auth.currentUser;
-
-            try {
-                //Try to update email
-                await deleteUser(user);
-                document.getElementById("feedback").textContent = "Sorry to see you go. Redirecting to starting page";
-                document.getElementById("feedback").style.backgroundColor = "lightgreen";
-                setTimeout(() => {
-                    window.location.href = "./index.html";
-                }, 1500);
-            } catch (err){
-                console.error("Delete error:", err);
-                //Session too old, reauthenticate:
-                if (err.code == 'auth/requires-recent-login') {
-                    try{
-                        //Re-authenticate user in case session is considered old:
-                        const renewedCredential = await promptForCredentials();
-                        await reauthenticateWithCredential(user, renewedCredential);
-                        console.log("Reauthentication successful")
-            
-                        //Retry email update
-                        await deleteUser(user);
-                        document.getElementById("feedback").textContent = "Sorry to see you go. Redirecting to starting page";
-                        document.getElementById("feedback").style.backgroundColor = "lightgreen";
-                        setTimeout(() => {
-                            window.location.href = "./index.html";
-                        }, 1500);
-                    } catch (reauthErr){
-                        console.error("Reauthentication failed:", reauthErr);
-                        document.getElementById("feedback").textContent = "Reauthentication failed. Try logging in again.";
-                        document.getElementById("feedback").style.backgroundColor = "coral";
-                        return 
-                    }
-                } else {
-                    document.getElementById("feedback").textContent = "Error deleting account. Please try again.";
-                    document.getElementById("feedback").style.backgroundColor = "coral";
-                }
-            }
-        });
-
-        //Prompt for credentials using modal in profile.html
-        function promptForCredentials(){
-            return new Promise((resolve, reject) => {
-                authenticationModal.style.display = "block";
-
-                //Handle modal submit
-                const  handleSubmit = async (e) => {
-                    e.preventDefault();
-                    const authFormData = new FormData(authForm);
-                    const email = authFormData.get("email");
-                    const password = authFormData.get("password");
-                    try {
-                        const credential = EmailAuthProvider.credential(email, password);
-                        //clean up and hide form
-                        authForm.reset();
-                        document.getElementById("modalFeedback").textContent = "Authentication successful.";
-                        document.getElementById("modalFeedback").style.backgroundColor = "lightgreen";
-                        setTimeout(() => {
-                            authenticationModal.style.display = "none";
-                        }, 500);
-
-                        authForm.removeEventListener('submit', handleSubmit);
-
-                        resolve(credential);
-                    } catch (err) {
-                        document.getElementById("modalFeedback").textContent = "Email or password incorrect. Please try again.";
-                        document.getElementById("modalFeedback").style.backgroundColor = "coral";
-                        reject(err);
+                    console.error("Email update error:", err);
+                    //Session too old, reauthenticate:
+                    if (err.code == 'auth/requires-recent-login') {
+                        try{
+                            //Re-authenticate user in case session is considered old:
+                            const renewedCredential = await promptForCredentials();
+                            await reauthenticateWithCredential(user, renewedCredential);
+                            console.log("Reauthentication successful")
+                
+                            //Retry email update
+                            await verifyBeforeUpdateEmail(user, updatedEmail);
+                            emailFormFeedback.textContent = "Check your new email for a confirmation link.";
+                            emailFormFeedback.style.backgroundColor = "lightgreen";
+                            emailForm.reset();
+                            setTimeout(() => {
+                                //Hide form
+                                emailForm.style.display = "none";
+                            }, 1000);
+                        } catch (reauthErr){
+                            console.error("Reauthentication failed:", reauthErr);
+                            emailFormFeedback.textContent = "Reauthentication failed. Try logging in again.";
+                            emailFormFeedback.style.backgroundColor = "coral";
+                            return 
+                        }
+                    } else {
+                        emailFormFeedback.textContent = "Error updating email. Please retry.";
+                        emailFormFeedback.style.backgroundColor = "coral";
                     }
                 }
-
-                authForm.addEventListener('submit', handleSubmit);
             });
-        }
-    </script>
-    <script>
-        const changeEmailButton = document.getElementById('changeEmailB');
-        changeEmailButton.addEventListener('click', (e) => {
-            e.preventDefault();
-            //Toggle visibility of email change form
-            if(changeEmailForm.style.display === "none"){
-                changeEmailForm.style.display = "block";
-            }
-        });
 
-        const changePasswordButton = document.getElementById('changePasswordB');
-        changePasswordButton.addEventListener('click', (e) => {
-            e.preventDefault();
-            //Toggle visibility of email change form
-            if(changePasswordForm.style.display === "none"){
-                changePasswordForm.style.display = "block";
-            }
-        })
+            //Prompt for credentials using modal in profile.html
+            function promptForCredentials(){
+                return new Promise((resolve, reject) => {
+                    authenticationModal.style.display = "flex";
 
-        const passwordInput = document.getElementById("auth-password");
-        const revealPasswordIcon = document.getElementById("icon");
+                    //Handle modal submit
+                    const  handleSubmit = async (e) => {
+                        e.preventDefault();
+                        const authFormData = new FormData(authForm);
+                        const email = authFormData.get("email");
+                        const password = authFormData.get("password");
+                        try {
+                            const credential = EmailAuthProvider.credential(email, password);
+                            //clean up and hide form
+                            authForm.reset();
+                            authModalFeedback.textContent = "Authentication successful.";
+                            authModalFeedback.style.backgroundColor = "lightgreen";
+                            setTimeout(() => {
+                                authenticationModal.style.display = "none";
+                            }, 500);
 
-        revealPasswordIcon.addEventListener("click", () => {
-            const newType = passwordInput.getAttribute("type") === "password" ? "text" : "password";
-            passwordInput.setAttribute("type", newType);
-            //Swap icon:
-            if(newType === "text"){
-                document.getElementById("icon").classList.remove("fa-eye");
-                document.getElementById("icon").classList.add("fa-eye-slash");
-            } else {
-                document.getElementById("icon").classList.remove("fa-eye-slash");
-                document.getElementById("icon").classList.add("fa-eye");
-            }
-        });
-    </script>
-    <script>
-        function openTab(e, tabName) {
-            var i, tabcontent, tablinks;
-            tabcontent = document.getElementsByClassName("tabcontent");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].style.display = "none";
-            }
-            tablinks = document.getElementsByClassName("tablinks");
-            for (i = 0; i < tablinks.length; i++) {
-                tablinks[i].className = tablinks[i].className.replace(" active", "");
-            }
-            document.getElementById(tabName).style.display = "block";
-            e.currentTarget.className += " active";
-        }
-        document.body.addEventListener(DOMContentLoaded, openTab(event, 'feedback-history'));
+                            authForm.removeEventListener('submit', handleSubmit);
 
-        var modal = document.getElementById("reauthModal");
-        var span = document.getElementsByClassName("close")[0];
-        span.onclick = function() { // Close the modal when the user clicks on <span> (x)
-            modal.style.display = "none";
-        }
-    </script>
+                            resolve(credential);
+                        } catch (err) {
+                            authModalFeedback.textContent = "Email or password incorrect. Please try again.";
+                            authModalFeedback.style.backgroundColor = "coral";
+                            reject(err);
+                        }
+                    }
+
+                    authForm.addEventListener('submit', handleSubmit);
+                });
+            }
+        </script>
+        <script type="module">
+            import {auth} from './src/firebase.js';
+            import {updatePassword} from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+
+            const changePasswordForm = document.getElementById('change-password-form');
+            const changePasswordFormSubmitButton = document.getElementById('submit-new-password-button');
+            const changePasswordFormFeedback = document.getElementById('password-form-feedback');
+
+            changePasswordFormSubmitButton.addEventListener('click', async (e) => {
+                e.preventDefault();
+                const formData = new FormData(changePasswordForm);
+                const newPassword = formData.get("password1");
+                const newPasswordRepeat = formData.get("password2");
+
+                if(newPassword !== newPasswordRepeat){
+                    changePasswordFormFeedback.textContent = "Passwords do not match.";
+                    changePasswordFormFeedback.style.backgroundColor = "coral";
+                } else {
+                    try {
+                        updatePassword(auth.currentUser, newPassword);
+                        changePasswordForm.reset(); 
+                        changePasswordFormFeedback.textContent = "Password update successful.";
+                        changePasswordFormFeedback.style.backgroundColor = "lightgreen";
+                        setTimeout(() => {
+                            //Hide form
+                            changePasswordForm.style.display = "none";
+                            window.location.reload();
+                        }, 1000);
+                    } catch (err){
+                        console.error("Password update error:", err);
+                        changePasswordFormFeedback.textContent = "Error updating password";
+                        changePasswordFormFeedback.style.backgroundColor = "coral";
+                    }
+                }
+            });
+        </script>
+        <script type="module">
+            import { auth } from './src/firebase.js';
+            import { signOut } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+
+            document.getElementById("logout-button").addEventListener("click", async (e) => {
+                e.preventDefault();
+                try {
+                    await signOut(auth);
+                    console.log("User signed out;");
+                    setTimeout(() => {
+                        window.location.href = "./index.html";
+                    }, 500);
+                } catch (err) {
+                    console.error("Error signing out: ", err.message);
+                }
+            });
+        </script>
+        <script type="module">
+            import {auth} from './src/firebase.js';
+            import {deleteUser, reauthenticateWithCredential, EmailAuthProvider} from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+
+            const deleteAccButton = document.getElementById('delete-account-button'); 
+            const deleteAccFeedback = document.getElementById('delete-acc-action-feedback');
+
+            deleteAccButton.addEventListener('click', async (e) => {
+                e.preventDefault();
+                const user = auth.currentUser;
+
+                try {
+                    //Try to update email
+                    await deleteUser(user);
+                    deleteAccFeedback.textContent = "Sorry to see you go. Redirecting to starting page";
+                    deleteAccFeedback.style.backgroundColor = "lightgreen";
+                    setTimeout(() => {
+                        window.location.href = "./index.html";
+                    }, 1500);
+                } catch (err){
+                    console.error("Delete error:", err);
+                    //Session too old, reauthenticate:
+                    if (err.code == 'auth/requires-recent-login') {
+                        try{
+                            //Re-authenticate user in case session is considered old:
+                            const renewedCredential = await promptForCredentials();
+                            await reauthenticateWithCredential(user, renewedCredential);
+                            console.log("Reauthentication successful")
+                
+                            //Retry email update
+                            await deleteUser(user);
+                            deleteAccFeedback.textContent = "Sorry to see you go. Redirecting to starting page";
+                            deleteAccFeedback.style.backgroundColor = "lightgreen";
+                            setTimeout(() => {
+                                window.location.href = "./index.html";
+                            }, 1500);
+                        } catch (reauthErr){
+                            console.error("Reauthentication failed:", reauthErr);
+                            deleteAccFeedback.textContent = "Reauthentication failed. Try logging in again.";
+                            deleteAccFeedback.style.backgroundColor = "coral";
+                            return 
+                        }
+                    } else {
+                        deleteAccFeedback.textContent = "Error deleting account. Please try again.";
+                        deleteAccFeedback.style.backgroundColor = "coral";
+                    }
+                }
+            });
+
+            //Prompt for credentials using modal in profile.html
+            function promptForCredentials(){
+                return new Promise((resolve, reject) => {
+                    authenticationModal.style.display = "flex";
+
+                    //Handle modal submit
+                    const  handleSubmit = async (e) => {
+                        e.preventDefault();
+                        const authFormData = new FormData(authForm);
+                        const email = authFormData.get("email");
+                        const password = authFormData.get("password");
+                        try {
+                            const credential = EmailAuthProvider.credential(email, password);
+                            //clean up and hide form
+                            authForm.reset();
+                            authModalFeedback.textContent = "Authentication successful.";
+                            authModalFeedback.style.backgroundColor = "lightgreen";
+                            setTimeout(() => {
+                                authenticationModal.style.display = "none";
+                            }, 500);
+
+                            authForm.removeEventListener('submit', handleSubmit);
+
+                            resolve(credential);
+                        } catch (err) {
+                            authModalFeedback.textContent = "Email or password incorrect. Please try again.";
+                            authModalFeedback.style.backgroundColor = "coral";
+                            reject(err);
+                        }
+                    }
+
+                    authForm.addEventListener('submit', handleSubmit);
+                });
+            }
+        </script>
+        <script>
+            document.getElementById('change-email-button').addEventListener('click', (e) => {
+                e.preventDefault();
+                //Toggle visibility of email change form
+                if(document.getElementById('change-email-form').style.display === "none"){
+                    document.getElementById('change-email-form').style.display = "block";
+                }
+            });
+
+            const changePasswordButton = document.getElementById('change-password-button');
+            changePasswordButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                //Toggle visibility of email change form
+                if(document.getElementById('change-password-form').style.display === "none"){
+                    document.getElementById('change-password-form').style.display = "block";
+                }
+            })
+
+            const passwordInput = document.getElementById("auth-password");
+            const revealPasswordIcon = document.getElementById("icon");
+            const showPasswordIcon = document.getElementById("icon");
+
+            revealPasswordIcon.addEventListener("click", () => {
+                const newType = passwordInput.getAttribute("type") === "password" ? "text" : "password";
+                passwordInput.setAttribute("type", newType);
+                //Swap icon:
+                if(newType === "text"){
+                    showPasswordIcon.classList.remove("fa-eye");
+                    showPasswordIcon.classList.add("fa-eye-slash");
+                } else {
+                    showPasswordIcon.classList.remove("fa-eye-slash");
+                    showPasswordIcon.classList.add("fa-eye");
+                }
+            });
+        </script>
+        <script>
+            function openTab(e, tabName) {
+                var i, tabcontent, tablinks;
+                tabcontent = document.getElementsByClassName("tabcontent");
+                for (i = 0; i < tabcontent.length; i++) {
+                    tabcontent[i].style.display = "none";
+                }
+                tablinks = document.getElementsByClassName("tablinks");
+                for (i = 0; i < tablinks.length; i++) {
+                    tablinks[i].className = tablinks[i].className.replace(" active", "");
+                }
+                document.getElementById(tabName).style.display = "block";
+                e.currentTarget.className += " active";
+            }
+            document.body.addEventListener(DOMContentLoaded, openTab(event, 'feedback-history'));
+
+            var span = document.getElementsByClassName("close")[0];
+            span.onclick = function() { // Close the modal when the user clicks on <span> (x)
+                document.getElementById('reauth-modal').style.display = "none";
+            }
+        </script>
 </html>

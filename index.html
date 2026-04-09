@@ -27,8 +27,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Averia+Libre:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
   </head>
-  <body class="bg" style="display: flex; flex-direction: column;">
-    <nav class="navbar navbar-expand-lg navbar-dark px-4 py-3 " id="header" style="position: fixed;">
+  <body class="bg">
+    <nav class="navbar navbar-expand-lg navbar-dark px-4 py-3 " id="header">
       <div class="container-fluid d-flex justify-content-between align-items-center">
         <header-left-side></header-left-side>
         <div class="d-flex align-items-center">
@@ -42,7 +42,7 @@
         </div>
       </div>
     </nav>
-    <div class="container-fluid" id="main_content_area" style="flex-grow: 1; justify-content: center; align-items: center;">
+    <div class="container-fluid" id="main_content_area">
       <div class="row">
         <div id="scroll-tracker" class="col"></div>
       </div>
@@ -50,7 +50,7 @@
         <div class="row align-items-center" id="parallax1">
           <div class="col-12 my-5">
             <div class="welcome_text_container">
-              <h1 class="text-center" id="welcome_text" style="color:white;">Solid climbing feedback, built for everyone</h1>
+              <h1 class="text-center" id="welcome_text">Solid climbing feedback, built for everyone</h1>
             </div>
           </div>
         </div>
@@ -66,7 +66,7 @@
           <div class="col col-12 mt-3 mb-5 ms-4 mx-3">
             <div class="row">
               <!-- Video player container -->
-              <div class="col-8 ms-4 mx-2 px-2 py-2" id="video_container" style="background-color: rgba(245, 245, 245, 0.7);"> 
+              <div class="col-8 ms-4 mx-2 px-2 py-2" id="video-container" style="height: 500px;"> 
                 <video class="video-js" controls preload="auto" data-setup="{}" id="demo-video"> <!-- Video player using Video.js -->
                   <source src="./src/assets/sample-w-overlay.mp4" type="video/mp4" />
                   <p class="vjs-no-js">
@@ -75,16 +75,16 @@
                   </p>
                 </video>
               </div>
-              <div class="col-3" id="feedback_container" style="position: relative; height: 520px; max-height: 521px; background-color: rgba(255, 255, 255, 0.99);">
-                <div class="row p-3" style="position: absolute; top: 0; right: 0; left: 0; z-index: 10; background-color: lightgray;"> 
+              <div class="col-3" id="demo-feedback-container">
+                <div class="feedback-top-filler row p-3"> 
                   <p></p>
                 </div>
-                <div style="position: absolute; top:60px; bottom:60px; left:0; right: 0; overflow-y: auto;">
-                  <ul id="feedback-list" style="list-style-type: none; padding: 0;">
+                <div class="feedback-list-container">
+                  <ul class="feedback-list">
                     <li>
                       <table> 
                         <tr> 
-                          <td class="timestamp" style="width: 30%;">
+                          <td class="demo_timestamp">
                             0:02 - 0:03
                           </td>
                           <td>
@@ -96,7 +96,7 @@
                     <li>
                       <table> 
                         <tr> 
-                          <td class="timestamp" style="width: 30%;">
+                          <td class="demo_timestamp">
                             0:03 - 0:06
                           </td>
                           <td>
@@ -108,7 +108,7 @@
                     <li>
                       <table> 
                         <tr> 
-                          <td class="timestamp" style="width: 30%;">
+                          <td class="demo_timestamp">
                             0:06 - 0:06
                           </td>
                           <td>
@@ -120,7 +120,7 @@
                      <li>
                       <table> 
                         <tr> 
-                          <td class="timestamp" style="width: 30%;">
+                          <td class="demo_timestamp">
                             0:06 - 0:07
                           </td>
                           <td>
@@ -131,7 +131,7 @@
                     </li>
                   </ul>
                 </div>
-                <div class="row p-3" style="position: absolute; bottom: 0; right: 0; left: 0; background-color: lightgray; z-index: 10;"> 
+                <div class="feedback-bottom-filler row p-3"> 
                   <p></p>
                 </div>
               </div>
@@ -139,10 +139,10 @@
           </div>
         </div>
       </div>
-      <div class="row" style="height:300px;">
+      <div class="row" style="height: 50vh;">
         <div class="row" id="parallax1"></div>
       </div>
-      <div class="row justify-content-between panel" style="min-height: 15%;">
+      <div class="row justify-content-between panel">
         <!-- Text contents -->
         <div class="col-4 my-5 mx-3 about_us_text">
           <p>BoulderBud is a student project built by a pair of Algonquin College Computer Engineering Technology - Computing Science students to showcase their acquired skills in Video Processing, Pose Estimation, API Development, and technologies related to Web Development. Perhaps more importantly, it is a passion-project that aims to fill the void in the domain of accessible bouldering feedback.</p>
@@ -155,16 +155,19 @@
           <h2>About Project</h2>
         </div>
       </div>
-      <div class="row" style="height:600px;">
-        <div class="row justify-content-center align-items-center" id="parallax1">
+      <div class="row" style="height: 50vh;">
+        <div class="row" id="parallax1"></div>
+      </div>
+      <div class="row panel">
+        <div class="row justify-content-center" id="parallax1">
             <div class="col-5 text-center">
-              <button id="tryOutBtn" type="button" class="btn btn-primary w-100" style="font-size:24px; padding: 20px; background-color: blueviolet; border: none;">Try It Out!</button>
+              <button id="tryOutBtn" type="button" class="btn btn-primary w-100">Try It Out!</button>
             </div>
         </div>
       </div>
       <!-- Try out modal (if user is not logged in) -->
       <div id="tryOutModal" class="modal">
-        <div class="modal-content">
+        <div  id="modal-content">
           <div class="row mb-3 text-end">
             <span class="close" >&times;</span>
           </div>
@@ -182,9 +185,8 @@
   </body>
   <script type="module">
     import { auth } from './src/firebase.js';
-    import { signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+    import { signOut } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
 
-    /* Script handling log out button: */
     document.getElementById("logoutB").addEventListener("click", async (e) => {
         e.preventDefault();
         try {
@@ -197,8 +199,12 @@
             console.error("Error signing out: ", err.message);
         }
     });
+  </script>
+  <!-- Script checking for authenticated user -->
+  <script type="module">
+    import { auth } from './src/firebase.js';
+    import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
 
-    /* Script checking for authenticated user: */
     onAuthStateChanged( auth, (user) => {
       document.querySelectorAll('.logged-in').forEach(el => el.style.display = user ? 'block' : 'none');
       document.querySelectorAll('.logged-out').forEach(el => el.style.display = user ? 'none' : 'block');
@@ -220,57 +226,56 @@
               }
           }
       } else {
-          btn.onclick = function(){
-              window.location.href = "./upload.html";
-          }
-      }
-      //If pfp present, display:
-      if(user.photoURL){
-        document.getElementById("pfp").src = user.photoURL;
+        btn.onclick = function(){
+            window.location.href = "./upload.html";
+        }
+        if(user.photoURL == ""){
+          document.getElementById("pfp").src = user.photoURL;
+        }
       }
     });
   </script>
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      const video = document.getElementById("demo-video");
-      const listItems = document.querySelectorAll("#feedback-list li");
+    const video = document.getElementById("demo-video");
+    const listItems = document.querySelectorAll(".feedback-list li");
 
-      listItems.forEach(li => {
-        li.style.cursor = "pointer";
+    listItems.forEach(li => {
+      li.style.cursor = "pointer";
 
-        li.addEventListener("click", () => {
+      li.addEventListener("click", () => {
+        //reset styles for all timestamps
+        listItems.forEach(item => {
+          const timestamp = item.querySelector("td.demo_timestamp");
+          timestamp.style.textDecoration = "none";
+          timestamp.style.color = "black";
+        }); 
+        const timestamp = li.querySelector("td.demo_timestamp");
+        timestamp.style.textDecoration = "underline";
+        timestamp.style.color = "rgb(36, 173, 237)";
 
-          listItems.forEach(item => {
-            const timestamp = item.querySelector("td.timestamp");
-            timestamp.style.textDecoration = "none";
-            timestamp.style.color = "black";
-          }); 
-          const timestamp = li.querySelector("td.timestamp");
-          timestamp.style.textDecoration = "underline";
-          timestamp.style.color = "rgb(36, 173, 237)";
-
-          const timestampCell = li.querySelector("td.timestamp");
-          if (!timestampCell) {
-            return;
-          }
-          const text = timestampCell.innerText.trim();  // e.g. "0:02 - 0:03"
-          const startStr = text.split("-")[0].trim();   // "0:02"
-          const seconds = timeStringToSeconds(startStr);
-
-          video.currentTime = seconds;
-          video.pause();
-        });
-      });
-
-      // Convert MM:SS string to seconds
-      function timeStringToSeconds(t) {
-        const parts = t.split(":").map(Number);
-        if (parts.length === 2) {
-          return parts[0] * 60 + parts[1];
+        const timestampCell = li.querySelector("td.demo_timestamp");
+        if (!timestampCell) {
+          return;
         }
-        return 0;
-      }
+        const text = timestampCell.innerText.trim();  // e.g. "0:02 - 0:03"
+        const startStr = text.split("-")[0].trim();   // "0:02"
+        const seconds = timeStringToSeconds(startStr);
+
+        video.currentTime = seconds;
+        video.pause();
+      });
     });
+
+    // Convert MM:SS string to seconds
+    function timeStringToSeconds(t) {
+      const parts = t.split(":").map(Number);
+      if (parts.length === 2) {
+        return parts[0] * 60 + parts[1];
+      }
+      return 0;
+    }
+  });
 
     document.addEventListener("DOMContentLoaded", () => {
       const panels = document.querySelectorAll('.panel');

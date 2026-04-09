@@ -22,27 +22,27 @@
         <link href="https://fonts.googleapis.com/css2?family=Honk&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Contrail+One&display=swap" rel="stylesheet">
     </head>
-        <body class="bg" style="display: flex; flex-direction: column;">
+        <body class="bg">
         <!-- Header -->
-        <nav class="navbar navbar-expand-lg navbar-dark px-4 py-3 " id="header" style="position: fixed;">
+        <nav class="navbar navbar-expand-lg navbar-dark px-4 py-3 " id="header">
             <div class="container-fluid d-flex justify-content-between align-items-center">
                 <header-left-side></header-left-side>
             </div>
         </nav>
-        <div class="container-fluid" id="main_content_area" style="flex-grow: 1; padding-top: 5%;">
+        <div class="container-fluid" id="main_content_area">
             <div class="row">
-                <div class="row align-items-center" id="background-panel1" style="height: 100vh">
+                <div class="row align-items-center" id="background-panel1">
                     <div class="col col-4 offset-4 pt-4 mt-3 mb-5 order-2">
-                        <h2 id="lightText" style="padding-bottom: 4%; text-align: center; font-family: 'Contrail One', sans-serif;">Sign Into Account</h2>
-                        <form class="form-control py-3 px-4" style="background-color: #AB4459; border: none;">
+                        <h2 id="lightText">Sign Into Account</h2>
+                        <form id="loginForm" class="form-control py-3 px-4">
                             <div class="mb-3">
-                                <label for="email" class="form-label" style="color:white;">Email address</label>
+                                <label for="email" class="form-label">Email address</label>
                                 <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
                             </div>
-                            <div class="mb-3" style="position:relative;">
-                                <label for="password" class="form-label" style="color:white;">Password</label>
-                                <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required>
-                                <i id="icon" class="fa-solid fa-eye" style="position: absolute; right: 10px; top: 70%; transform: translateY(-42%); font-size: 19px; color: rgb(158, 158, 159); cursor: pointer;"></i>
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" style="padding-right: 40px;" required>
+                                <i id="icon" class="fa-solid fa-eye" style="right: 37vw; transform: translateY(-140%);"></i>
                             </div>
                             <!-- TODO: Implement password recovery functionality -->
                             <!-- <div class="align-items-center col-6">
@@ -54,40 +54,39 @@
                         </form>
                         <div class="row">
                             <div class="col-10 offset-1 mt-3">
-                                <p id="feedback" style="width: auto; margin: 0; text-align: center; color: white;"></p>
+                                <p id="auth-feedback"></p>
                             </div>
                         </div>
                         <br/>
-                        <h2 id="lightText" style="padding: 10px; text-align: center; font-family: 'Contrail One', sans-serif;">- OR -</h2>
+                        <h2 id="lightText">- OR -</h2>
                         <!-- Google Sign-Up Button -->
-                        <div style="text-align: center;">
-                            <input id="googleSignupB" type="image" src="./src/assets/google_signin.png" style="width: 200px; height:auto; padding-top: 10px;">
+                        <div class="row justify-content-center">
+                            <input id="googleSigninBtn" type="image" src="./src/assets/google_signin.png">
                         </div>
-                        <a id="donthave-have_link" href="./signup.html" style="text-align: center; display: block; margin-top: 35px; color: rgb(111, 193, 213);">Don't have an account? Sign up</a>
+                        <a id="donthave-have_link" href="./signup.html">Don't have an account? Sign up</a>
                     </div>
                 </div>
             </div>
         </div>
         <!-- Footer -->
         <footer-component></footer-component>
-
+        <!-- Script checking for authenticated user -->
         <script type="module">
-            import { auth, db } from './src/firebase.js';
-            import { onAuthStateChanged, getRedirectResult, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+                import { auth, db } from './src/firebase.js';
+                import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+                const i = 0;
+                auth.onAuthStateChanged(user => {
+                    if (user && i===0) {
+                        // User is signed in
+                        window.location.href = "./profile.html";
+                    } 
+                    i++;
+                });
+        </script>
+        <script type="module">
+            import { auth } from './src/firebase.js';
             import {signInWithEmailAndPassword} from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
             
-            /* Script checking for authenticated user: */
-            const i = 0;
-
-            auth.onAuthStateChanged(user => {
-                if (user && i===0) {
-                    // User is signed in
-                    window.location.href = "./profile.html";
-                } 
-                i++;
-            });
-            
-            /* Scripts handling sign-ins with email and password: */
             document.querySelector("form").addEventListener("submit", async (e) =>{
                 e.preventDefault();
                 const formData = new FormData(e.target);
@@ -97,37 +96,18 @@
                 try {
                     const userCred = await signInWithEmailAndPassword(auth, email, password);
 
-                    document.getElementById("feedback").textContent = "Welcome back!";
-                    document.getElementById("feedback").style.backgroundColor = "lightgreen";
+                    document.getElementById("auth-feedback").textContent = "Welcome back!";
+                    document.getElementById("auth-feedback").style.backgroundColor = "lightgreen";
                     setTimeout(() => {
                         window.location.href = "./profile.html";
                     }, 1500);
                     
                 } catch (err) {
-                    document.getElementById("feedback").textContent = "Email or password incorrect. Please try again.";
-                    document.getElementById("feedback").style.backgroundColor = "coral";
+                    document.getElementById("auth-feedback").textContent = "Email or password incorrect. Please try again.";
+                    document.getElementById("auth-feedback").style.backgroundColor = "coral";
                 }
                 //clean up form
                 document.querySelector("form").reset();
-            });
-
-            /* Script handling Google sign-ins: */
-            const provider = new GoogleAuthProvider();
-            console.log(provider);
-            const googleSignupButton = document.getElementById("googleSignupB");
-
-            googleSignupButton.addEventListener("click", (e) => {
-                e.preventDefault();
-                signInWithPopup(auth, provider)
-                .then((result) => {
-                    console.log("Google user:", result.user);
-                    setTimeout(() => {
-                        window.location.href = "./profile.html";
-                    }, 1000);
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
             });
         </script>
         <script>
@@ -145,6 +125,28 @@
                     document.getElementById("icon").classList.remove("fa-eye-slash");
                     document.getElementById("icon").classList.add("fa-eye");
                 }
+            });
+        </script>
+        <script type="module">
+            import { auth } from './src/firebase.js';
+            import { getRedirectResult, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+
+            const provider = new GoogleAuthProvider();
+            console.log(provider);
+            const googleSigninButton = document.getElementById("googleSigninBtn");
+
+            googleSigninButton.addEventListener("click", (e) => {
+                e.preventDefault();
+                signInWithPopup(auth, provider)
+                .then((result) => {
+                    console.log("Google user:", result.user);
+                    setTimeout(() => {
+                        window.location.href = "./profile.html";
+                    }, 1000);
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
             });
         </script>
     </body>

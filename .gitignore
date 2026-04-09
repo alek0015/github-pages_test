@@ -4,3 +4,4 @@ eslint.config.js
 node_modules/
 package-lock.json
 package.json
+src/.DS_Store

@@ -13,8 +13,8 @@ class Footer extends HTMLElement {
                         <div class="row ps-4">
                         <p>GitHub:</p>
                         <p>Email (Business inquiries only):</p>
-                        <address id="email-contact"> <a href="mailto:lego0006@algonquinlive.com">lego0006@algonquinlive.com</a></address>
-                        <address id="email-contact"> <a href="mailto:alek0015@algonquinlive.com">alek0015@algonquinlive.com</a></address>
+                        <address class="email-contact"> <a href="mailto:lego0006@algonquinlive.com">lego0006@algonquinlive.com</a></address>
+                        <address class="email-contact"> <a href="mailto:alek0015@algonquinlive.com">alek0015@algonquinlive.com</a></address>
                         </div>
                     </div>
                     <div class="col-md-5 my-3 mx-4 text-start">
@@ -33,7 +33,7 @@ class Footer extends HTMLElement {
                     </div>
                 </div>
                 <div id="hearBackModal" class="modal">
-                    <div class="modal-content">
+                    <div id="hearback-modal-content">
                         <div class="row mb-3 text-end">
                             <span class="close">&times;</span>
                         </div>

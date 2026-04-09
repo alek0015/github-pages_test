@@ -1,12 +1,262 @@
-html, body {
+/**
+    Global styles
+**/
+body {
     height: 100%;
     margin:0;
-}
-
-body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+}
+
+label {
+    color:white;
+}
+
+.bg {
+    width: 100%;
+    margin:0;
+    display: flex; 
+    flex-direction: column;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed; /* Makes the bg image lag behind the overlaid content while scrolling */
+    background-image: url("./assets/bright-climbing-wall.jpg");
+    min-height: 100vh;
+}
+
+.profile-img {
+    vertical-align: middle;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.feedback-list {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+}
+
+.feedback-list li {
+    margin: 15px;
+    border-color: gray;
+    background-color: white;
+    border-bottom-style: solid ;
+    border-width: 2px;
+    font-family: "Nunito", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 16px;
+}
+
+.feedback-top-filler, .feedback-bottom-filler {
+    position: absolute; 
+    right: 0; 
+    left: 0; 
+    z-index: 10; 
+    background-color: lightgray;
+}
+
+.feedback-top-filler {
+    top: 0; 
+}
+
+.feedback-bottom-filler {
+    bottom: 0;
+}
+
+.feedback-list-container {
+    position: absolute; 
+    top:60px; 
+    bottom:60px; 
+    left:0; 
+    right: 0; 
+    overflow-y: auto; 
+    overflow-x: clip;
+}
+
+.email-contact {
+    padding-left: 50px;
+    font-size: 18px;
+}
+
+.fa-eye, .fa-eye-slash {
+    position: absolute; 
+    right: 10px; 
+    font-size: 19px; 
+    color: rgb(158, 158, 159); 
+    cursor: pointer;
+}
+
+#header, #footer {
+    z-index: 20;
+    background-color: #441752 !important;
+    width: 100%;
+    height:100%;
+    margin: 0;
+}
+
+#header {
+    position: fixed;
+    height: 90px;
+}
+
+#main_content_area {
+    padding-top: 5%;
+    flex-grow: 1;
+}
+
+#background-panel1, #background-panel2 {
+    width: 100%;
+    margin: 0;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    min-height: calc(100vh - 90px - 300px); /* Subtracting header and footer heights from viewport height */
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+#background-panel1 {
+    background-image: url("./assets/ledges-grips-wall.jpg");
+}
+
+#background-panel2 {
+    background-image: url("./assets/bright-climbing-wall.jpg");
+}
+
+#lightText {
+    padding-bottom: 4%; 
+    text-align: center; 
+    font-family: 'Contrail One', sans-serif;
+    color: white;
+}
+
+#boulderbud {
+    margin-top: 6%;
+    font-family: "Honk", system-ui;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-variation-settings:
+    "MORF" 15,
+    "SHLN" 50;
+    font-size: 40px;
+}
+
+#video-container {
+    overflow: hidden;
+    border-radius: 2.5%;
+    background-color: rgba(245, 245, 245, 0.8);
+}
+
+#vid, #demo-video {
+    width: 100%;
+    height: 100%;
+    object-fit: scale-down;
+    background-color: white;
+    border-radius: 2.5%;
+}
+
+#feedback-container, #demo-feedback-container {
+    border-radius: 2.5%; 
+    overflow-y:scroll; 
+    position: relative;
+    font-size:18px;
+    background-color: rgba(255, 255, 255, 0.99);
+}
+
+#loginForm, #signupForm {
+    background-color: #AB4459; 
+    border: none;
+}
+
+#auth-feedback {
+    width: auto; 
+    margin: 0; 
+    text-align: center; 
+    color: white;
+}
+
+#googleSigninBtn {
+    width: 230px; 
+    height: auto; 
+}
+
+#donthave-have_link {
+    text-align: center; 
+    display: block; 
+    margin-top: 50px; 
+    color: rgb(154, 201, 212);
+}
+
+#donthave-have_link:hover, #donthave-have_link:focus {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#uploads-left-message {
+    color: white;
+}
+
+#uploads-limit-progress{
+    width: 250px; 
+    height: 20px;
+}
+
+#maintenance-message {
+    background-color: rgba(255, 255, 0, 0.7); 
+    text-align: center; 
+    border-radius: 4%;
+}
+
+/**
+    index.html styles
+**/
+
+.panel {
+    background-color: rgba(171, 68, 89, 0.96);
+    background-position: center;
+    border-radius: 15px;
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    min-height: 50vh;
+    color: #1B1833;
+}
+
+.panel.in-view {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.panel h2 {
+    font-family: "Contrail One", sans-serif;
+    padding-top: 15px;
+}
+
+.demo_timestamp {
+    width: 30%;
+    text-decoration: none;
+    font-weight: 700;
+    color: black;
+}
+
+.about_us_text {
+    color: rgb(227, 214, 184);
+    font-family: "Averia Libre", system-ui;
+    font-weight: 500;
+    font-style: normal;
+    line-height: 2;
+}
+
+#demo-feedback-container {
+    height: 520px; 
+    max-height: 521px;
 }
 
 #welcome_text {
@@ -15,8 +265,10 @@ body {
     z-index: 0;
     opacity: 0; /* start invisible for fade-in effect */
     animation: fadeIn 5s forwards; /* fade in over 2 seconds */
+    color:white;
 }
 
+/* Keyframes for welcome text fade-in animation */
 @keyframes fadeIn {
     0% { opacity: 0;}
     100% { opacity: 1;}
@@ -35,57 +287,9 @@ body {
     animation-timeline: scroll();
 }
 
+/* Keyframes for scroll tracker animation */
 @keyframes scroll-tracker {
     to { scale: 1 1;}
-}
-
-.panel {
-    background-color: rgba(171, 68, 89, 0.96);
-    background-position: center;
-    color: #1B1833;
-    border-radius: 15px;
-    opacity: 0;
-    transform: scale(0.95);
-    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-}
-
-.panel.in-view {
-  opacity: 1;
-  transform: scale(1);
-}
-
-.panel h2 {
-    font-family: "Contrail One", sans-serif;
-    padding-top: 15px;
-}
-
-.about_us_text {
-    color: rgb(227, 214, 184);
-    font-family: "Averia Libre", system-ui;
-    font-weight: 500;
-    font-style: normal;
-    line-height: 2;
-}
-
-#lightText {
-    color: white;
-    font-family: Copperplate Bold, sans-serif;
-}
-
-.profile-img {
-    vertical-align: middle;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-}
-
-#main_content_area {
-    padding-top: 90px;
-    flex-grow: 1;
-}
-
-#background-panel {
-    min-height: calc(100vh - 90px - 300px);
 }
 
 #parallax1 {
@@ -95,8 +299,7 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    /* What actually makes the bg image lag behind the other content while scrolling: */
-    background-attachment: fixed; 
+    background-attachment: fixed; /* Makes the bg image lag behind the other content while scrolling */
 }
 
 #parallax2 {
@@ -106,167 +309,19 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    /* What actually makes the bg image lag behind the other content while scrolling: */
-    background-attachment: fixed;
+    background-attachment: fixed; /* Makes the bg image lag behind the other content while scrolling */
 }
 
-.bg {
-    background-image: url("./assets/bright-climbing-wall.jpg");
-    width: 100%;
-    margin:0;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    /* What actually makes the bg image lag behind the other content while scrolling: */
-    background-attachment: fixed; 
+#tryOutBtn {
+    font-size: 24px; 
+    padding: 20px; 
+    background-color: blueviolet; 
+    border: none;
 }
 
-#header, #footer {
-    z-index: 20;
-    background-color: #441752 !important;
-    width: 100%;
-    height:100%;
-    margin: 0;
-}
-
-#boulderbud {
-    font-family: "Honk", system-ui;
-    font-optical-sizing: auto;
-    font-weight: 400;
-    font-style: normal;
-    font-variation-settings:
-    "MORF" 15,
-    "SHLN" 50;
-    font-size: 40px;
-}
-
-#header {
-    position: fixed;
-    height: 90px;
-}
-
-#video_container {
-    height: 500px;
-    overflow: hidden;
-    border-radius: 2.5%;
-}
-
-#vid {
-    width: 100%;
-    height: 100%;
-    object-fit: scale-down;
-    background-color: white;
-    border-radius: 2.5%;
-}
-
-
-#video_container #demo-video {
-    width: 100%;
-    height: 100%;
-    object-fit: scale-down;
-    background-color: white;
-    border-radius: 2.5%;
-}
-
-#feedback_container {
-    max-height: 500px; 
-    border-radius: 2.5%; 
-    overflow-y:scroll; 
-    font-size:18px; 
-    background-color: white;
-}
-
-li {
-    margin: 15px;
-    border-color: gray;
-    background-color: white;
-    border-bottom-style: solid ;
-    border-width: 2px;
-    font-family: "Nunito", sans-serif;
-    font-optical-sizing: auto;
-    font-weight: 400;
-    font-style: normal;
-    font-size: 16px;
-}
-
-.timestamp {
-    font-weight: 700;
-}
-
-#email-contact {
-    padding-left: 50px;
-    font-size:18px;
-}
-
-.modal {
-    display: none;
-    z-index: 1;
-    padding-top: 20%;
-    padding-left: 25%;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0,0,0,0.4);
-}
-
-.modal-content {
-    position: absolute;
-    left: 50%;
-    top: 25%;
-    width: 60%;
-    transform: translate(-50%, -10%);
-    background-color: #441752;
-    align-self: center; 
-    color: white;
-    margin: auto;
-    border: 2px solid white;
-    padding:5%
-}
-
-#modalEmailInput {
-    display: none;
-}
-
-.close {
-    color: white;
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.close:hover, .close:focus {
-    color: gray;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-#background-panel1 {
-    background-image: url("./assets/ledges-grips-wall.jpg");
-    width: 100%;
-    margin: 0;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-attachment: fixed;
-    min-height: calc(100vh - 90px - 300px);
-}
-
-#background-panel2 {
-    background-image: url("./assets/bright-climbing-wall.jpg");
-    width: 100%;
-    margin: 0;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-attachment: fixed;
-    min-height: calc(100vh - 90px - 300px);
-}
-
-#donthave-have_link:hover, #donthave-have_link:focus {
-    text-decoration: none;
-    cursor: pointer;
-}
-
-/* Profile Page Specific Styles */
+/** 
+    profile.html styles
+**/
 .tab {
     overflow: hidden;
     border-bottom: 1px solid #ccc;
@@ -292,7 +347,41 @@ li {
 
 .tab button.active {
     background-color: #ccc;
-}   
+} 
+
+#profile-panel {
+    border-radius: 3%;
+    padding: 2rem 0;
+    height: auto;
+    background-color: rgba(243, 161, 89, 0.9); 
+}
+
+#user-image {
+    height: 5%; 
+    width: 100px; 
+    border: 4px solid white;
+}
+
+#user-email {
+    font-size: 18px;
+    color: white;
+}
+
+#logout-button {
+    padding-bottom: 2%;
+}
+
+#user-functions-container {
+    height: 400px; 
+    max-height: 401px;
+    border-radius: 3%; 
+    margin-top: 30px;
+    margin-bottom: 30px;
+}  
+
+#feedback-history {
+    padding: 1rem;
+}
 
 #past-feedback-entry{
     width: 250px; 
@@ -319,10 +408,51 @@ li {
     background-color: rgba(53, 55, 56, 0.25);
 }
 
-#uploads-limit-progress{
-    width: 250px; 
-    height: 20px;
+#manage-account-content {
+    display: none; 
+    padding: 1rem;
 }
+
+#email-display {
+    color: purple;
+    padding-left: 3%; 
+    padding-right: 2%;
+}
+
+#change-email-button {
+    font-size: 12px;
+}
+
+#change-email-button, #change-password-button {
+    color: rgb(49, 172, 196); 
+    text-decoration:underline; 
+}
+
+#change-email-button:hover, #change-email-button:focus, #change-email-button:active,
+#change-password-button:hover, #change-password-button:focus, #change-password-button:active {
+    color: rgb(25, 152, 177);
+}
+
+#delete-account-button {
+    color: rgb(255, 68, 0); 
+    text-decoration: underline;
+}
+
+#delete-account-button:hover, #delete-account-button:focus, #delete-account-button:active {
+    color: rgb(255, 0, 0);
+}
+
+#auth-password {
+    padding-right: 40px;
+}
+
+#reauth-form .fa-eye, #reauth-form .fa-eye-slash {
+    top: 15%;
+}
+
+/**
+    upload.html styles
+**/
 
 .allan-sans-heading {
   font-family: "Alan Sans", sans-serif;
@@ -331,11 +461,185 @@ li {
   font-style: normal;
 }
 
-.header .button {
-    color: rgb(24, 103, 230);
-    cursor: pointer;
+.fa-upload {
+    padding-bottom: 4%;
+    font-size: 50px;
+}
+
+.fa-x {
+    font-size: 13px;
+    align-self: center;
+}
+
+#file-upload-container {
+    background-color: whitesmoke; 
+    border-radius: 3%; 
+    height: 500px;
+}
+
+#file-upload-container .container {
+    width: 100%; 
+    height: 100%; 
+    border-radius: 3%; 
+    padding: 5%;
+    background-color: rgb(217, 214, 214); 
+}
+
+#drag-drop-area {
+    display: flex; 
+    flex-direction: column; 
+    height: 80%;
+    justify-content: center; 
+    align-items: center;
+    border-radius: 3%; 
+    border: 2px dashed whitesmoke; 
+    margin: 5%;
 }
 
 #drag-drop-area.active {
     background-color: rgb(195, 192, 192);
+}
+
+#file-browser-button {
+    text-decoration: underline;
+    cursor: pointer;
+    color: rgb(49, 172, 196);
+}
+
+#file-browser-button:hover {
+    color: rgb(25, 152, 177);
+}
+
+#file-browser-button:active {
+    color: rgb(0, 132, 153);
+}
+
+#support-text {
+    font-size: 12px;
+    color: rgb(95, 95, 95);
+}
+
+#file-preview {
+    border-radius: 4%;
+    margin-top: 25px; 
+    padding: 10px;
+    padding-left: 20px;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+#remove-file-button {
+    display: flex;
+    margin-left: 20px;
+    padding: 5px;
+    border-radius: 20%;
+    background-color: rgb(132, 127, 127);
+    border: none;
+    cursor: pointer;
+}
+
+#remove-file-button:hover, #remove-file-button:focus, #remove-file-button:active {
+    background-color: rgb(112, 107, 107);
+}
+
+#loading-spinner {
+    display:none;
+    position: fixed;
+    inset: 0;
+    background: rgba(11, 7, 1, 0.6);
+    backdrop-filter: blur(3px);
+    z-index: 9999;
+    color: white;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    flex-direction: column;
+}
+
+/**
+    feedback.html styles
+**/
+
+.feedback-item {
+    margin-bottom: 12px;
+    padding : 8px;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+}
+
+.fa-arrow-left {
+    margin-right:5%;
+}
+
+#feedback-container {
+    height: 630px; 
+    max-height:631px;
+}
+
+#return-to-upload-button {
+    max-width: 15%;
+    margin-top: 5%;
+    margin-bottom: 2%;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+#return-to-upload-button .icon{
+    font-size:18px;
+}
+
+/**
+    Modal styles
+**/
+
+.modal {
+    display: none;
+    z-index: 1;
+    padding-top: 20%;
+    padding-left: 25%;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.close {
+    color: white;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover, .close:focus {
+    color: gray;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#modal-content, #reauth-modal-content, #hearback-modal-content {
+    position: absolute;
+    left: 50%;
+    top: 25%;
+    transform: translate(-50%, -10%);
+    background-color: #441752;
+    align-self: center; 
+    color: white;
+    margin: auto;
+    border: 2px solid white;
+    padding:5%
+}
+
+#modal-content, #hearback-modal-content {
+    width: 60%;
+}
+
+#reauth-modal-content {
+    width: 45%; 
+    height: 50%; 
+    padding-top: 1%; 
+    padding-right: 2%; 
+    padding-left: 2%;
+}
+
+#submit-creds-button {
+    max-width: 50%;
 }
